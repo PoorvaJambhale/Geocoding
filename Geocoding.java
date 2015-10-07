@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class Geocoding {
 	
 	//API Key
-	public static String KEY = "AIzaSyDJl75vbgxJd1VsQy_MRCdAVFaTZSxIFv8";
+	public static String KEY = "xxxAPI keyxxx";
 	
 	public void getCoOrdinates(String str) throws IOException, JSONException {
 		//Build the url to invoke the API.

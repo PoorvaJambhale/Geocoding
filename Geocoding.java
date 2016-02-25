@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class Geocoding {
 	
 	//API Key
-	public static String KEY = "xxxAPI keyxxx";
+	public static final String KEY = "AIzaSyDJl75vbgxJd1VsQy_MRCdAVFaTZSxIFv8";
 	
 	public void getCoOrdinates(String str) throws IOException, JSONException {
 		//Build the url to invoke the API.
@@ -28,17 +28,25 @@ public class Geocoding {
 		
 		//Parse the JSON object.
 		JSONObject jsonObj = new JSONObject(response);
-		JSONArray resultsArray = jsonObj.getJSONArray("results");
-		JSONObject formattedAddressObj = resultsArray.getJSONObject(0);
-		JSONObject geometryObj = formattedAddressObj.getJSONObject("geometry");
-		JSONObject locationObj = geometryObj.getJSONObject("location");
-		
-		Object latitudeObj = locationObj.get("lat");
-		System.out.println("Latitude: " + latitudeObj.toString());
-		
-		Object longitudeObj = locationObj.get("lng");
-		System.out.println("Longitude: " + longitudeObj.toString());
-		
+		String status = jsonObj.getString("status");
+				
+		if(status.equals("OK")){
+			System.out.print(status);
+			System.out.println (" - The address was successfully parsed.");
+			JSONArray resultsArray = jsonObj.getJSONArray("results");
+			JSONObject formattedAddressObj = resultsArray.getJSONObject(0);
+			JSONObject geometryObj = formattedAddressObj.getJSONObject("geometry");
+			JSONObject locationObj = geometryObj.getJSONObject("location");
+			
+			Object latitudeObj = locationObj.get("lat");
+			System.out.println("Latitude: " + latitudeObj.toString());
+			
+			Object longitudeObj = locationObj.get("lng");
+			System.out.println("Longitude: " + longitudeObj.toString());
+			
+		} else {
+			System.out.println(status);
+		}
 	}
 	
 	 public String httpGet(String urlStr) throws IOException {
@@ -65,7 +73,7 @@ public class Geocoding {
 	
 	public static void main(String[] args) throws IOException, JSONException {
 		
-		String str = "1 Fanatical Place, Windcrest, TX 78218";
+		String str = "1600 Amphitheatre Pkwy, Mountain View, CA 94043";
 		System.out.println();
 		System.out.println("Retrieving co-ordinates for the address: " + str);
 		System.out.println();
